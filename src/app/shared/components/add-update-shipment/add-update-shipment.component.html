@@ -1,0 +1,74 @@
+<app-header [isModal]="true" [title]="product ? 'Actualizar Envio' : 'Agregar Envio'"></app-header>
+<ion-content>
+    <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+
+        <ion-avatar *ngIf="form.value.image">
+            <img [src]="form.value.image" />
+        </ion-avatar>
+        <ion-icon class="  image.icon" *ngIf="!form.value.image" name="image-outline"></ion-icon>
+
+        <br>
+        <!--IMAGEN PRODUCTO-->
+        <ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
+            Tomar/Seleccionar
+        </ion-button>
+
+        <!--NOMBRE PRODUCTO-->
+        <app-custom-imput autocomplete="name" [control]="form.controls.name" type="text"
+            label="Nombre del Producto"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+            <div *ngIf="form.controls.name.errors?.['required']">Es necesario ingresar el nombre del producto</div>
+            <div *ngIf="form.controls.name.errors?.['minlenght']">El prodcuto debe tener al menos 2 caracteres</div>
+        </div>
+
+        <!--TIPO PRODUCTO-->
+        <app-custom-imput autocomplete="typeProduct" [control]="form.controls.typeProduct" type="text"
+            label="Tipo de Producto"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.typeProduct.errors && form.controls.typeProduct.touched">
+            <div *ngIf="form.controls.typeProduct.errors?.['required']">Es necesario ingresar el tipo de producto</div>
+            <div *ngIf="form.controls.typeProduct.errors?.['minlenght']">Este campo debe tener al menos 4 caracteres
+            </div>
+        </div>
+
+        <!--DESCRIPCION-->
+        <app-custom-imput [control]="form.controls.description" type="text"
+            label="Descripcion del Producto"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.touched">
+            <div *ngIf="form.controls.description.errors?.['required']">Es necesario ingresar una descripcion del
+                producto</div>
+            <div *ngIf="form.controls.description.errors?.['minlenght']">Este campo debe tener al menos 4 caracteres
+            </div>
+        </div>
+
+        <!--PESO-->
+        <app-custom-imput [control]="form.controls.weight" type="number" label="Peso (KG)"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.weight.errors && form.controls.weight.touched">
+            <div *ngIf="form.controls.weight.errors?.['required']">Es necesario ingresar el peso del producto</div>
+            <div *ngIf="form.controls.weight.errors?.['min']">El peso minimo puede ser 0</div>
+        </div>
+
+        <!--NOMBRE DESTINATARIO-->
+        <app-custom-imput [control]="form.controls.nameRecipient" type="text"
+            label="Nombre del Destinatario"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.nameRecipient.errors && form.controls.nameRecipient.touched">
+            <div *ngIf="form.controls.nameRecipient.errors?.['required']">Es necesario ingresar el nombre del
+                destinatario</div>
+            <div *ngIf="form.controls.nameRecipient.errors?.['minlenght']">El nombre debe tener al menos 4 caracteres
+            </div>
+        </div>
+
+        <!--DIRECCION DESTINATARIO-->
+        <app-custom-imput [control]="form.controls.addressRecipient" type="text"
+            label="Direccion del Destinatario"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.addressRecipient.errors && form.controls.addressRecipient.touched">
+            <div *ngIf="form.controls.addressRecipient.errors?.['required']">Es necesario ingresar un direccion</div>
+            <div *ngIf="form.controls.addressRecipient.errors?.['minlenght']">La direccion debe tener al menos 4
+                caracteres</div>
+        </div>
+
+        <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+            {{product ? 'Actualizar Envio' : 'Agregar Envio'}}
+            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+    </form>
+</ion-content>

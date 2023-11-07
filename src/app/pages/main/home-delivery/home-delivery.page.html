@@ -1,0 +1,69 @@
+<app-header [showMenu]="true" title="Inicio Repartidor"></app-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center" *ngIf="!loading && products.length">
+    <div>
+      <h5>{{products.length}}</h5>
+      <p>Envios</p>
+    </div>
+    <div>
+      <h5>{{getProfits() | currency: 'USD'}}</h5>
+      <p>Ganancias Totales</p>
+    </div>
+  </ion-card>
+
+  <ion-list *ngIf="!loading">
+    <ion-item-sliding class="product-item" *ngFor="let p of products">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="p.image" />
+        </ion-avatar>
+        <ion-label>
+          <div class="name">{{p.name}}</div>
+          <div class="data">
+            <strong>Tipo de Producto:</strong> {{p.typeProduct}} <br>
+            <strong>Descripcion:</strong> {{p.description}} <br>
+            <strong>Peso (KG):</strong> {{p.weight}} <br>
+            <strong>Destinatario:</strong> {{p.nameRecipient}} <br>
+            <strong>Direccion de Destino:</strong> {{p.addressRecipient}}
+          </div>
+          <ion-chip color="primary" mode="ios" outline="true">
+            <ion-label>Valor: {{3500 * p.weight | currency: 'USD'}} </ion-label>
+          </ion-chip>
+        </ion-label>
+      </ion-item>
+
+      <!--OPCIONES-->
+      <ion-item-options>
+        <!--ELIMINAR-->
+        <ion-item-option (click)="confirmDeleteProduct(p)" color="green">
+          <ion-icon class="option-btn" name="checkmark-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!--CARGANDO-->
+  <ion-list *ngIf="loading">
+      <ion-item class="product-item" *ngFor="let p of [6,6,6]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated style="width: 100; height: 100%;"></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <div><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></div>
+          <div><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></div>
+        </ion-label>
+      </ion-item>
+  </ion-list>
+
+  <!--NO ENVIOS DISPONIBLES-->
+  <div *ngIf="!loading && !products.length" class="empty">
+    <app-logo></app-logo>
+    <h3>No hay envios disponibles</h3>
+  </div>
+</ion-content>

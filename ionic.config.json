@@ -1,0 +1,7 @@
+{
+  "name": "ToveExpress",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
